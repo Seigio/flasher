@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type=text/javascript>
+            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        </script>
+
+        <!--Loads JSON data for question set in a global js variable named json_data -->
+        <script type=text/javascript>
+            var json_data;
+            $(document).ready(function(){
+                var json_promise = $.getJSON($SCRIPT_ROOT + '/get_json/testq_1.json');
+                
+                json_promise.done(function(json) {
+                    json_data = json;
+                    console.log(json_data);
+
+                    //kill me loop, loops through json data to find the first object, then breaks
+                    for(var q in json_data){
+                        $('#question_header').text(json_data[q].question_header);
+                        $('#question').text(json_data[q].question);
+                        break;
+                    }
+                });
+
+                json_promise.fail(function(){
+                    alert('failed to load flashcard');
+                });
+
+
+                console.log(json_data);
+            });
+
+            /*
+            $(document).ready(function(){
+                $('.change').click(function() {
+                    $.getJSON($SCRIPT_ROOT + '/update_question', {
+                        question_header: $('#question_header').text(),
+                        direction: $(this).attr('name')
+                    }, function(data) {
+                        console.log(data);
+                        $('#question').text(data.question);
+                        $('#question_header').text(data.question_header);
+                    });
+                    return false;
+                });
+            });**/
+</script>
+    </head>
+    <body>
+        <h1 id="question_header"></h1>
+        <p id="question"></p>
+        <button class="change" name="previous">Previous</button>
+        <button class="change" id="next" name="next">Next</button>
+    </body>  
+
+    <footer>
+        <script type="text/javascript" src="{{url_for('static', filename='load_test.js')}}"></script>
+    </footer>
+</html>
