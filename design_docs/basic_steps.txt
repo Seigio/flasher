@@ -6,8 +6,8 @@ Step 1:
 	- Load a question from a json
 
 Step 2:
-	* update text whenever you press next
-	* update the text based on a json file
+	- update text whenever you press next
+	- update the text based on a json file
 
 step 3:
 	* have an input field, so you can answer questions displayed through the text

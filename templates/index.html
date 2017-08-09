@@ -9,7 +9,10 @@
 
         <!--Loads JSON data for question set in a global js variable named json_data -->
         <script type=text/javascript>
+            QUESTIONS = {};
+
             var json_data;
+            var questions = [];
             $(document).ready(function(){
                 var json_promise = $.getJSON($SCRIPT_ROOT + '/get_json/testq_1.json');
                 
@@ -17,12 +20,15 @@
                     json_data = json;
                     console.log(json_data);
 
-                    //kill me loop, loops through json data to find the first object, then breaks
+                    var i = 0;
                     for(var q in json_data){
-                        $('#question_header').text(json_data[q].question_header);
-                        $('#question').text(json_data[q].question);
-                        break;
+                        questions[i] = json_data[q];
+                        i++;
                     }
+                    console.log(questions[0]);
+                    $('#question_header').text(questions[0].title);
+                    $('#question').text(questions[0].question);
+
                 });
 
                 json_promise.fail(function(){
@@ -32,31 +38,21 @@
 
                 console.log(json_data);
             });
-
-            /*
-            $(document).ready(function(){
-                $('.change').click(function() {
-                    $.getJSON($SCRIPT_ROOT + '/update_question', {
-                        question_header: $('#question_header').text(),
-                        direction: $(this).attr('name')
-                    }, function(data) {
-                        console.log(data);
-                        $('#question').text(data.question);
-                        $('#question_header').text(data.question_header);
-                    });
-                    return false;
-                });
-            });**/
-</script>
+        </script>
     </head>
     <body>
         <h1 id="question_header"></h1>
         <p id="question"></p>
         <button class="change" name="previous">Previous</button>
         <button class="change" id="next" name="next">Next</button>
+        <form name="check_ans" id="check_ans">
+            <input type="text" name="answer" id="answer" placeholder="Answer">
+            <button type="submit"> Submit </button>
+        </form>
     </body>  
 
     <footer>
         <script type="text/javascript" src="{{url_for('static', filename='load_test.js')}}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='check_answer.js')}}"></script>
     </footer>
 </html>

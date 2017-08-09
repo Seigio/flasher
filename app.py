@@ -56,4 +56,4 @@ def question():
 
     json_data = json.load(open(json_file))
 
-    return render_template('index.html', data=json_data)    
+    return render_template('index.html', data=json_data)

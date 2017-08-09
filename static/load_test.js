@@ -8,9 +8,11 @@ function get_index(){
 function get_direction(test) {
     var direction = $(test).attr('name');
 
-    //we need to return a direction to increment the question index
-    //example: if 'next' is pressed, the question index increases by 1, inverse for 'previous'
-    //returns 0 if direction couldn't be determined, keeping the question the same
+    /*
+        we need to return a direction to increment the question index
+        example: if 'next' is pressed, the question index increases by 1, inverse for 'previous'
+        returns 0 if direction couldn't be determined, keeping the question the same
+    */
     if (direction){
         if(direction === 'next'){
             return 1;
