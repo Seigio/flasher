@@ -1,4 +1,21 @@
+/*
+    Pagination is tied to the current Deck.  It updates the DOM based on what page the user selects,
+    pulling the required Flashcard from the Deck.  Whenever a Flashcard is added to the Deck, normally
+    when the Deck is initialized, Pagination grows.
 
+    Pagination is a Module, and can be accessed through the following:
+        public:
+            next():       void - If the next page exists, increments the current page by 1 and updates the DOM
+            previous():   void - If the previous page exists, decrements the current page by 1 and updates the DOM
+            go_to(page):  void - Sets current_page to (page) and updates the DOM.  next() and previous() are 
+                                 implementations of go_to()
+            init:         void - Initializes the Module, reseting the current_page to 1, reseting the total_pages,
+                                 and resubscribing to the new Deck
+
+        private:
+            current_page: int  - Persistent index keeping track of the current page
+            total_pages : int  - Persistent integer tracking the total number of Flashcards in the Deck
+*/
 
 var Pagination = (function($){ //function($) passes in the jQuery module to be used within the function
     var current_page, total_pages;
