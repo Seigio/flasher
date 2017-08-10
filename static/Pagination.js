@@ -3,7 +3,11 @@
     pulling the required Flashcard from the Deck.  Whenever a Flashcard is added to the Deck, normally
     when the Deck is initialized, Pagination grows.
 
-    Pagination is a Module, and can be accessed through the following:
+    Pagination is a Module with the following functions and variables:
+        private:
+            current_page: int  - Persistent index keeping track of the current page
+            total_pages : int  - Persistent integer tracking the total number of Flashcards in the Deck
+        
         public:
             next():       void - If the next page exists, increments the current page by 1 and updates the DOM
             previous():   void - If the previous page exists, decrements the current page by 1 and updates the DOM
@@ -12,9 +16,6 @@
             init:         void - Initializes the Module, reseting the current_page to 1, reseting the total_pages,
                                  and resubscribing to the new Deck
 
-        private:
-            current_page: int  - Persistent index keeping track of the current page
-            total_pages : int  - Persistent integer tracking the total number of Flashcards in the Deck
 */
 
 var Pagination = (function($){ //function($) passes in the jQuery module to be used within the function
@@ -30,9 +31,7 @@ var Pagination = (function($){ //function($) passes in the jQuery module to be u
         });
     };
 
-    //Updates the DOM whenever the current page is changed
     function update_page(){
-        console.log(current_page + "    " + total_pages);
         $('#question_header').text(Deck.title(current_page - 1));
         $('#question').text(Deck.question(current_page - 1));
     }
@@ -47,6 +46,7 @@ var Pagination = (function($){ //function($) passes in the jQuery module to be u
     }
 
     return {
+        //next and previous are implementations of go_to    
         next: function(){
             return go_to(current_page + 1);
         },
