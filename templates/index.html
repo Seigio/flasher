@@ -6,44 +6,11 @@
         <script type=text/javascript>
             $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
         </script>
-
-        <!--Loads JSON data for question set in a global js variable named json_data -->
-        <script type=text/javascript>
-            QUESTIONS = {};
-
-            var json_data;
-            var questions = [];
-            $(document).ready(function(){
-                var json_promise = $.getJSON($SCRIPT_ROOT + '/get_json/testq_1.json');
-                
-                json_promise.done(function(json) {
-                    json_data = json;
-                    console.log(json_data);
-
-                    var i = 0;
-                    for(var q in json_data){
-                        questions[i] = json_data[q];
-                        i++;
-                    }
-                    console.log(questions[0]);
-                    $('#question_header').text(questions[0].title);
-                    $('#question').text(questions[0].question);
-
-                });
-
-                json_promise.fail(function(){
-                    alert('failed to load flashcard');
-                });
-
-
-                console.log(json_data);
-            });
-        </script>
     </head>
     <body>
         <h1 id="question_header"></h1>
         <p id="question"></p>
-        <button class="change" name="previous">Previous</button>
+        <button class="change" id="previous" name="previous">Previous</button>
         <button class="change" id="next" name="next">Next</button>
         <form name="check_ans" id="check_ans">
             <input type="text" name="answer" id="answer" placeholder="Answer">
@@ -52,7 +19,37 @@
     </body>  
 
     <footer>
-        <script type="text/javascript" src="{{url_for('static', filename='load_test.js')}}"></script>
-        <script type="text/javascript" src="{{url_for('static', filename='check_answer.js')}}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='pubsub.js')}}"></script>        
+        <script type="text/javascript" src="{{url_for('static', filename='Deck.js')}}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='Pagination.js')}}"></script>
+
+        <!--Loads JSON data and initializes the Deck module -->
+        <script type=text/javascript>
+            $(document).ready(function(){
+                //Calls flask route /get_json with the parameter of /<filename> to retrieve a json
+                //TODO! refactor retrieveing json files for more dynamic options to support multiple decks
+                var json_promise = $.getJSON($SCRIPT_ROOT + '/get_json/testq_1.json');
+                
+                json_promise.done(function(json) {
+                    Deck.init(json);
+
+                    //Initialize the first question on load
+                    $('#question_header').text(Deck.title(0));
+                    $('#question').text(Deck.question(0));
+                });
+
+                json_promise.fail(function(){
+                    alert('failed to load flashcard');
+                });
+
+                $('#next').bind('click', function(){
+                    Pagination.next();
+                })
+
+                $('#previous').bind('click', function(){
+                    Pagination.previous();
+                })
+            });
+        </script>
     </footer>
 </html>

@@ -50,10 +50,4 @@ def get_json(filename):
 
 @app.route('/')
 def question():
-    filename = "testq_1.json"
-    JSON_FOLDER = os.path.join(app.config['ROOT_FOLDER'], "projectfiles\\test_json\\")
-    json_file = os.path.join(JSON_FOLDER, filename)
-
-    json_data = json.load(open(json_file))
-
-    return render_template('index.html', data=json_data)
+    return render_template('index.html')
