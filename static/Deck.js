@@ -13,13 +13,13 @@
             flashcards[]: array - Holds all the Flashcard objects in the Deck
         
         public:
-            init_from_json():   void - Intializes the Deck Module from a json file
-            add_flashcard():    void - Pushes a Flashcard to the flashcards[] array
-            remove_flashcard(): void - Removes a Flashcard from the flashcards[] array
-            get_length():       void - Gets the length of the flashcards[] array
-            get_flashcard():    void - Gets a Flashcard from the flashcards[] array
-            get_title():        void - Gets the title of a Flashcard
-            get_question():     void - Gets the question text of a Flashcard
+            init_from_json(json):       void - Intializes the Deck Module from a json file
+            add_flashcard(flashcard):   void - Pushes a Flashcard to the flashcards[] array
+            remove_flashcard(index):    void - Removes a Flashcard from the flashcards[] array
+            get_length():               void - Gets the length of the flashcards[] array
+            get_flashcard(index):       void - Gets a Flashcard from the flashcards[] array
+            get_title(index):           void - Gets the title of a Flashcard
+            get_question(index):        void - Gets the question text of a Flashcard
 */
 var Deck = (function($){
     var flashcards = [];
@@ -72,7 +72,6 @@ var Deck = (function($){
         var i = 0;
         var n_flashcard;
         for(var q in json){
-            //not sure if this will work, initializes a new flashcard (n_flashcard) from a json object
             n_flashcard = Flashcard();
             n_flashcard.init(json[q]);
             add_flashcard(n_flashcard);
@@ -127,8 +126,6 @@ var Deck = (function($){
         
         return (answer.toLowerCase() === u_answer.toLowerCase());
     }
-
-
 
 
     return {
