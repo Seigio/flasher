@@ -2,10 +2,13 @@
 
 <html>
     <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script type=text/javascript>
             $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
         </script>
+        <script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='pubsub.js')}}"></script>        
+        <script type="text/javascript" src="{{url_for('static', filename='Deck.js')}}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='Pagination.js')}}"></script>
     </head>
     <body>
         <h1 id="question_header"></h1>
@@ -14,25 +17,33 @@
         <button class="change" id="next" name="next">Next</button>
         <form name="check_ans" id="check_ans">
             <input type="text" name="answer" id="answer" placeholder="Answer">
-            <button type="submit"> Submit </button>
+            <input type="button" value="Check" id="submit_btn"> </input>
         </form>
     </body>  
 
     <footer>
-        <script type="text/javascript" src="{{url_for('static', filename='pubsub.js')}}"></script>        
-        <script type="text/javascript" src="{{url_for('static', filename='Deck.js')}}"></script>
-        <script type="text/javascript" src="{{url_for('static', filename='Pagination.js')}}"></script>
-
         <!--Loads JSON data and initializes the Deck module -->
         <script type=text/javascript>
+            $(document).keypress(function (e){
+                if (e.which == 13){
+                    document.getElementById('submit_btn').click();
+                }
+            });
+
+            (function() {
+                $('form').submit(function(){
+                    return false;
+                });
+            })();
+
             $(document).ready(function(){
                 //Calls flask route /get_json with the parameter of /<filename> to retrieve a json
                 //TODO! refactor retrieveing json files for more dynamic options to support multiple decks
                 var json_promise = $.getJSON($SCRIPT_ROOT + '/get_json/testq_1.json');
                 
                 json_promise.done(function(json) {
-                    Deck.init(json);
                     Pagination.init();
+                    Deck.init(json);
                     //Initialize the first question on load
                     $('#question_header').text(Deck.title(0));
                     $('#question').text(Deck.question(0));
@@ -45,11 +56,17 @@
 
                 $('#next').bind('click', function(){
                     Pagination.next();
-                })
+                });
 
                 $('#previous').bind('click', function(){
                     Pagination.previous();
-                })
+                });
+
+                $('#submit_btn').bind('click', function(){
+                    var text = document.forms.namedItem('check_ans').elements.namedItem('answer').value;
+                    alert(Deck.check(text));
+                });
+
             });
         </script>
     </footer>

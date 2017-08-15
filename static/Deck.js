@@ -121,8 +121,9 @@ var Deck = (function($){
         Paramaters:       int: index        u_answer (user answer): string
         Returns:          boolean: true if answer matches, false otherwise
     */          
-    function check_answer(index, u_answer){
-        var answer = get_flashcard(index).get_answer();
+    function check_answer(u_answer){
+        var index = Pagination.current_page() - 1; // current_page starts at 1, so it's 1 higher than the index
+        var answer = get_flashcard(index).answer();
         
         return (answer.toLowerCase() === u_answer.toLowerCase());
     }
@@ -135,7 +136,8 @@ var Deck = (function($){
         title: get_title,
         question: get_question,
         init: init_from_json,
-        length: get_length
+        length: get_length,
+        check: check_answer
     };
     
 })(jQuery);
