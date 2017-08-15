@@ -25,7 +25,7 @@ var Pagination = (function($){ //function($) passes in the jQuery module to be u
     var init = function(){
         current_page = 1;
         total_pages = 0;
-        //Updates total_pages whenever a new card is added to the current deck
+        //Use the pubsub model for some reason, probably a better way but lazy
         $.subscribe('card-added', function(){
             total_pages++;
         });
@@ -46,7 +46,6 @@ var Pagination = (function($){ //function($) passes in the jQuery module to be u
     }
 
     return {
-        //next and previous are implementations of go_to    
         next: function(){
             return go_to(current_page + 1);
         },
