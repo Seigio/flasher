@@ -130,8 +130,6 @@ var Deck = (function($){
     }
 
 
-
-
     return {
         add: add_flashcard,
         remove: remove_flashcard,

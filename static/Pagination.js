@@ -45,6 +45,10 @@ var Pagination = (function($){ //function($) passes in the jQuery module to be u
         }
     }
 
+    function get_current_page(){
+        return current_page;
+    }
+
     return {
         //next and previous are implementations of go_to    
         next: function(){
@@ -54,6 +58,7 @@ var Pagination = (function($){ //function($) passes in the jQuery module to be u
             return go_to(current_page - 1);
         },
         go_to: go_to,
-        init: init
+        init: init,
+        current_page: get_current_page
     };
 })(jQuery);
