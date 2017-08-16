@@ -34,6 +34,9 @@ var Pagination = (function($){ //function($) passes in the jQuery module to be u
     function update_page(){
         $('#question_header').text(Deck.title(current_page - 1));
         $('#question').text(Deck.question(current_page - 1));
+
+        var cleared_answer = document.getElementById('answer')
+        cleared_answer.value = '';
     }
 
     function go_to(page){
