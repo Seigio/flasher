@@ -1,0 +1,72 @@
+{% extends "template.html" %}
+
+{% block header %}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h2 id="question_header"></h2>
+        <p id="question"></p>
+        <form name="check_ans" id="check_ans">
+            <input type="text" name="answer" id="answer" placeholder="Answer">
+            <input type="button" value="Check" id="submit_btn"> </input>
+        </form>
+    </div>
+    <div class="buttons">
+        <button class="change" id="previous" name="previous">Previous</button>
+        <button class="change" id="next" name="next">Next</button>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+    <!--Loads JSON data and initializes the Deck module -->
+    <script type=text/javascript>
+        $(document).keypress(function (e){
+            if (e.which == 13){
+                document.getElementById('submit_btn').click();
+            }
+        });
+
+        //disables page reload
+        (function() {
+            $('form').submit(function(){
+                return false;
+            });
+        })();
+
+        $(document).ready(function(){
+            //Calls flask route /get_json with the parameter of /<filename> to retrieve a json
+            //TODO! refactor retrieveing json files for more dynamic options to support multiple decks
+            var json_promise = $.getJSON($SCRIPT_ROOT + '/get_json/testq_1.json');
+            
+            json_promise.done(function(json) {
+                Pagination.init();
+                Deck.init(json);
+                //Initialize the first question on load
+                $('#question_header').text(Deck.title(0));
+                $('#question').text(Deck.question(0));
+            });
+
+            json_promise.fail(function(){
+                //TODO- Error handling
+                alert('failed to load flashcard');
+            });
+
+            $('#next').bind('click', function(){
+                Pagination.next();
+            });
+
+            $('#previous').bind('click', function(){
+                Pagination.previous();
+            });
+
+            $('#submit_btn').bind('click', function(){
+                var text = document.forms.namedItem('check_ans').elements.namedItem('answer').value;
+                alert(Deck.check(text));
+            });
+
+        });
+    </script>
+{% endblock %}
