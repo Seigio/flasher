@@ -1,0 +1,179 @@
+body {
+    font-family: 'Ubuntu', sans-serif;
+    margin: 0 auto;
+    overflow-x: hidden;
+}
+
+div {
+    border-style: none;
+    border-width: 1px;
+}
+
+label {
+    position:fixed;
+    top:10px;
+    left:10px;
+    -moz-transition:all 200ms ease-in;
+    -webkit-transition:all 200ms ease-in;
+    -o-transition:all 200ms ease-in;
+    transition:all 200ms ease-in;
+    z-index: 500;
+}
+
+label i{
+    padding-left: 2%;
+    padding-top: 1%;
+    -moz-transition:all 200ms ease-in;
+    -webkit-transition:all 200ms ease-in;
+    -o-transition:all 200ms ease-in;
+    transition:all 200ms ease-in;
+}
+
+label i:hover,
+label i.hover {
+    cursor: pointer;
+}
+
+nav {
+    position:fixed;
+    top:0;
+    left:0;
+    width:250px;
+    height:100%;
+    margin:0 0 0 -250px;
+    padding: 0;
+    -moz-transition:all 200ms ease-in;
+    -webkit-transition:all 200ms ease-in;
+    -o-transition:all 200ms ease-in;
+    transition:all 200ms ease-in;
+}
+
+nav > ul {
+    display: block;
+    position: fixed;
+    margin-top: 0;
+    width: 250px;
+    height: 100%;
+    list-style: none;
+    background-color: rgba(46, 40, 37, 0.5);
+    transition: all 0.3s ease;    
+}
+
+nav > ul > li{
+    width: 100%;
+    padding: 20px 15px;
+    font-size: 1.78em;
+    font-weight: 300;
+    color: #fff;
+}
+
+input[type="checkbox"]{
+    display:none;
+}
+
+input[type="checkbox"]:checked ~ nav{
+    margin:0;
+}
+
+input[type="checkbox"]:checked ~ label{
+    left:260px;
+}
+
+#menu-options {
+    padding: 0;
+}
+
+
+section {
+    -moz-transition:all 200ms ease-in;
+    -webkit-transition:all 200ms ease-in;
+    -o-transition:all 200ms ease-in;
+    transition:all 200ms ease-in;
+}
+
+#main {
+    padding: 5%;
+}
+
+.hero-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo{
+    align-self: center;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.hero-buttons button {
+    font-family: 'Ubuntu', sans-serif; 
+    font-size: 1.29em;
+    color: #fff;
+    background-color: #93B7BE;
+    border: 0;
+    border-radius: 8px;
+    box-shadow: 0 7px #27496d;
+    padding: 15px 35px;
+}
+
+.hero-buttons button:hover,
+.hero-buttons button.hover {
+    background-color: #5C7B81;
+}
+
+.hero-buttons button:active
+.hero-buttons button.active {
+    background-color: #5C7B81;
+    box-shadow: 0 2px #27496d;
+    transform: translateY(5px);
+}
+
+
+#pitch {
+    padding: 5%;
+    background-color: #2E2825;
+    color: #ffffff;
+}
+
+#pitch-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+#pitch h1,
+#pitch h2 {
+    font-weight: 300;
+}
+
+.pitch-testimonial-header{
+    padding-top: 2.79em;
+}
+
+.pitch-testimonial {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.reverse-testimonial {
+    flex-direction: row-reverse;
+}
+
+.pitch-testimonal-text {
+    display: inherit;
+    flex-direction: column;
+    flex-grow: 2;
+}
+
+footer{
+    font-size: .75em;
+    font-weight: 300;
+    padding: 1% 5%;
+}

@@ -1,2 +1,3 @@
 DEBUG = True
 TESTING = False
+TEMPLATES_AUTO_RELOAD = True

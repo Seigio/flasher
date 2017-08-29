@@ -9,18 +9,26 @@ Step 2:
 	- update text whenever you press next
 	- update the text based on a json file
 
-step 3:
+Step 3:
 	- have an input field, so you can answer questions displayed through the text
 	- have each text possess a right answer
 	- show feedback if you get the right answer
 
 Step 4:
-	* Have a better methof of serving up the json files, maybe with SQLALCHEMY
+    - Refactor structure to work better with Flask
+    - Refactor the templates into working with React.js
+        - Instead of using an initializer to load in elements, and instead of using the update
+          function within Pagination (Which doesn't fit with the concept behind the Pagination model),
+          instead use React to load in data from the Json file
+    - Implement Pagination
+
+Step 5:
+	* Have a better method of serving up the json files, maybe with SQLALCHEMY
 	* Have a method for creating decks
 	* Have a method of selecting decks and serving up multiple files
 	* Have a way to preview available decks
 
-Step 5:
+Step 6:
 	* Create a content management system so different users can log in and access different decks
 
 
@@ -29,9 +37,11 @@ Step 5:
 Javascript design:
 	Module for pages:
 		list of flashcard indexes, clicking will load a goto and update the text
-		hitting next will load a goto with the parameter of the current index + 1, index - 1 for previous
+		hitting next will load a goto with the parameter of the current index + 1, index - 1 
+        for previous
 
-		Page Module should also include a checker, which calls the webserver with an evaluation of the current answer plus the index number and the file name;
+		Page Module should also include a checker, which calls the webserver with an evaluation 
+        of the current answer plus the index number and the file name;
 
 	Holding data from json:
 		Json Data should be stored in a global object

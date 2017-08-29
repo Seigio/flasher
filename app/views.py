@@ -10,6 +10,12 @@ def get_json(filename):
     data = jsonify(json_data)
     return data
 
+@app.route('/flashcard')
+def flashcard():
+    return render_template('flashcard.html')
+
 @app.route('/')
-def question():
+@app.route('/index.html')
+@app.route('/index')
+def index():
     return render_template('index.html')

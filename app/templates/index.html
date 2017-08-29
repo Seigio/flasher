@@ -1,72 +1,60 @@
 {% extends "template.html" %}
 
 {% block header %}
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='index.css')}}">
+    <script type="text/javascript" src="{{url_for('static', filename='navbar.js')}}"></script>
 {% endblock %}
 
 {% block content %}
-    <div class="card">
-        <h2 id="question_header"></h2>
-        <p id="question"></p>
-        <form name="check_ans" id="check_ans">
-            <input type="text" name="answer" id="answer" placeholder="Answer">
-            <input type="button" value="Check" id="submit_btn"> </input>
-        </form>
-    </div>
-    <div class="buttons">
-        <button class="change" id="previous" name="previous">Previous</button>
-        <button class="change" id="next" name="next">Next</button>
-    </div>
+    <input type="checkbox" id="navigation">
+    <label for="navigation">
+        <i class="fa fa-bars fa-2x" aria-hidden="true" id="hamburger-menu"></i>
+    </label>
+    <nav class="navbar-push-left">
+        <ul id="menu-options">
+            <li>Login</li>
+            <li>Decks</li>
+        </ul>
+    </nav>
+
+    <section id="main">
+        <div class="hero-image">
+            <img class="logo" src="{{url_for('static', filename='images/resource.png')}}"></img>
+            <p> This is a description </p>
+        </div>
+        <div class="hero-buttons">
+            <button>BROWSE</button>
+            <button>SIGN UP</button>
+        </div>
+    </section>
+
+    <section id="pitch">
+        <div id="pitch-wrapper">
+            <h1 class="pitch-explanation">WHY IT WORKS</h1>
+            <p class="pitch-explanation-text">This is why it works.  Isn't it fascinating how ti works?</p>
+            
+            <h2 class="pitch-testimonial-header">TESTIMONIALS</h2>
+            <div class="pitch-testimonial">
+                <img class="testimonial-face"></img>
+                <div class="pitch-testimonial-text">
+                    <h4>This is my really rather unnecessarily long and complicated testimonial<br>isn't it neat to look at?</h4>
+                    <p>---Author</p>
+                </div>
+            </div>
+            <div class="pitch-testimonial reverse-testimonial">
+                <img class="testimonial-face"></img>
+                <div class="pitch-testimonial-text">
+                    <h4>This is my testimonial</h4>
+                    <p>---Author</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}
 
+
 {% block footer %}
-    <!--Loads JSON data and initializes the Deck module -->
-    <script type=text/javascript>
-        $(document).keypress(function (e){
-            if (e.which == 13){
-                document.getElementById('submit_btn').click();
-            }
-        });
-
-        //disables page reload
-        (function() {
-            $('form').submit(function(){
-                return false;
-            });
-        })();
-
-        $(document).ready(function(){
-            //Calls flask route /get_json with the parameter of /<filename> to retrieve a json
-            //TODO! refactor retrieveing json files for more dynamic options to support multiple decks
-            var json_promise = $.getJSON($SCRIPT_ROOT + '/get_json/testq_1.json');
-            
-            json_promise.done(function(json) {
-                Pagination.init();
-                Deck.init(json);
-                //Initialize the first question on load
-                $('#question_header').text(Deck.title(0));
-                $('#question').text(Deck.question(0));
-            });
-
-            json_promise.fail(function(){
-                //TODO- Error handling
-                alert('failed to load flashcard');
-            });
-
-            $('#next').bind('click', function(){
-                Pagination.next();
-            });
-
-            $('#previous').bind('click', function(){
-                Pagination.previous();
-            });
-
-            $('#submit_btn').bind('click', function(){
-                var text = document.forms.namedItem('check_ans').elements.namedItem('answer').value;
-                alert(Deck.check(text));
-            });
-
-        });
-    </script>
+    <p>Contact: </p>
+    <p>About me</p>
 {% endblock %}

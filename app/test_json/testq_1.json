@@ -8,5 +8,10 @@
         "title": "Question 2",
         "question": "What is your name in Spanish?",
         "answer": "carlos"
+    },
+    "q3": {
+        "title": "Question 3",
+        "question": "What is plate in Spanish?",
+        "answer": "plato"
     }
 }
