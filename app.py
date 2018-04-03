@@ -5,7 +5,7 @@ app = Flask(__name__)
 app.config.from_envvar('FLASHERSETTINGS')
 
 def get_json_data(filename):
-    JSON_FOLDER = os.path.join(app.config['ROOT_FOLDER'], "test_json\\")
+    JSON_FOLDER = os.path.join(app.config['ROOT_FOLDER'], "static\\json\\")
     json_file = os.path.join(JSON_FOLDER, filename)
 
     json_data = json.load(open(json_file))
@@ -18,6 +18,10 @@ def get_json(filename):
     data = jsonify(json_data)
     return data
 
+@app.route('/unit/<unit_num>')
+def unit(unit_num):
+    return render_template('mockup.html', unum = unit_num)
+
 @app.route('/')
 def question():
-    return render_template('index.html')
+    return render_template('mockup.html')

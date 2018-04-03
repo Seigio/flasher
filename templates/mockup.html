@@ -1,0 +1,102 @@
+<!doctype HTML>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static', filename='mockup.css')}}">
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Numans" rel="stylesheet">
+        <script type=text/javascript>
+            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        </script>
+        <script src="{{url_for('static', filename='jquery.min.js')}}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='pubsub.js')}}"></script>        
+        <script type="text/javascript" src="{{url_for('static', filename='Deck.js')}}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='Pagination.js')}}"></script>
+    </head>
+    <body>
+        <div class="banner">
+            <ul>
+                <li class="nav-item">Play</li>
+                <li class="nav-item">Review</li>
+            </ul>
+        </div>
+
+        <div class="content-wrapper">
+            <h2 id="unit-heading">Unit {{ unum }}</h2>
+             
+            <div class="card-wrapper">
+                <div id="card">
+                    <div id="card-text-wrapper"><p id="card-text">#ASL</p></div>
+                    <iframe id="video" width="560" height="315"  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>            
+            <div class="card-nav-wrapper">
+                <img src="{{url_for('static', filename='resources//arrow-left.svg')}}" alt="previous card" id="previous" class="card-nav-icon">
+                <div class="nav-text-wrapper" id="flip"><p class="card-nav-text">Flip</p></div>
+                <img src="{{url_for('static', filename='resources//arrow-right.svg')}}" alt="next card" id="next" class="card-nav-icon">
+            </div>
+        </div>
+        
+    </body>
+    <footer>
+            <!--Loads JSON data and initializes the Deck module -->
+            <script type=text/javascript>
+                $(document).keypress(function (e){
+                    if (e.which == 32){
+                        Pagination.cycle();
+                    } 
+                    if (e.keyCode == 39) {
+                        Pagination.next();
+                    } 
+                    if (e.keyCode ==37) {
+                        Pagination.previous();
+                    }
+                });
+    
+                //disables page reload
+                (function() {
+                    $('form').submit(function(){
+                        return false;
+                    });
+                })();
+    
+                $(document).ready(function(){
+                    //Calls flask route /get_json with the parameter of /<filename> to retrieve a json
+                    //TODO! refactor retrieveing json files for more dynamic options to support multiple decks
+                    var json_promise = $.getJSON($SCRIPT_ROOT + ('/get_json/unit' + {{unum}} +'n.json'));
+                    
+                    json_promise.done(function(json) {
+                        Pagination.init();
+                        Deck.init(json);
+                        //Initialize the first question on load
+                        Pagination.update_page();
+                        /*$('#card-text').text(Deck.title(0));
+                        $('#video').text(Deck.url(0));*/
+                    });
+    
+                    json_promise.fail(function(){
+                        //TODO- Error handling
+                        alert('failed to load flashcard');
+                    });
+    
+                    $('#next').bind('click', function(){
+                        Pagination.next();
+                    });
+    
+                    $('#previous').bind('click', function(){
+                        Pagination.previous();
+                    });
+
+                    $('#card').bind('click', function(){
+                        Pagination.cycle();
+                    });
+
+                    $('#flip').bind('click', function(){
+                        Pagination.cycle();
+                    });
+
+                    
+    
+                });
+            </script>
+        </footer>
+</html>

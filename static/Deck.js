@@ -36,31 +36,25 @@ var Deck = (function($){
                 
     */
     var Flashcard = function(){
-        var title, question, answer;
+        var title, url;
 
         function init_from_json( q ){
-            answer = q.answer;
-            question = q.question;
             title = q.title;
+            url = q.url;
         }
 
         function get_title(){
             return title;
         }
 
-        function get_question(){
-            return question;
-        }
-
-        function get_answer(){
-            return answer;
+        function get_url(){
+            return url;
         }
 
         return{
             init: init_from_json,
             title: get_title,
-            question: get_question,
-            answer: get_answer
+            url: get_url
         };
     };
 
@@ -109,24 +103,8 @@ var Deck = (function($){
         return get_flashcard(index).title();
     }
 
-    function get_question(index){
-        return get_flashcard(index).question();
-    }
-
-    function get_answer(index){
-        return get_flashcard(index).answer();
-    }
-
-    /*
-        Checks an input answer against the correct answer
-        Paramaters:       int: index        u_answer (user answer): string
-        Returns:          boolean: true if answer matches, false otherwise
-    */          
-    function check_answer(u_answer){
-        var index = Pagination.current_page() - 1; // current_page starts at 1, so it's 1 higher than the index
-        var answer = get_flashcard(index).answer();
-        
-        return (answer.toLowerCase() === u_answer.toLowerCase());
+    function get_url(index){
+        return get_flashcard(index).url();
     }
 
 
@@ -135,10 +113,9 @@ var Deck = (function($){
         remove: remove_flashcard,
         get: get_flashcard,
         title: get_title,
-        question: get_question,
+        url: get_url,
         init: init_from_json,
         length: get_length,
-        check: check_answer
     };
     
 })(jQuery);

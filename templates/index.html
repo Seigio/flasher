@@ -12,7 +12,7 @@
     </head>
     <body>
         <h1 id="question_header"></h1>
-        <p id="question"></p>
+        <iframe id="question" width="560" height="315" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>            
         <button class="change" id="previous" name="previous">Previous</button>
         <button class="change" id="next" name="next">Next</button>
         <form name="check_ans" id="check_ans">
@@ -40,14 +40,14 @@
             $(document).ready(function(){
                 //Calls flask route /get_json with the parameter of /<filename> to retrieve a json
                 //TODO! refactor retrieveing json files for more dynamic options to support multiple decks
-                var json_promise = $.getJSON($SCRIPT_ROOT + '/get_json/testq_1.json');
+                var json_promise = $.getJSON($SCRIPT_ROOT + '/get_json/unit1n.json');
                 
                 json_promise.done(function(json) {
                     Pagination.init();
                     Deck.init(json);
                     //Initialize the first question on load
                     $('#question_header').text(Deck.title(0));
-                    $('#question').text(Deck.question(0));
+                    $('#question').text(Deck.url(0));
                 });
 
                 json_promise.fail(function(){
@@ -61,11 +61,6 @@
 
                 $('#previous').bind('click', function(){
                     Pagination.previous();
-                });
-
-                $('#submit_btn').bind('click', function(){
-                    var text = document.forms.namedItem('check_ans').elements.namedItem('answer').value;
-                    alert(Deck.check(text));
                 });
 
             });

@@ -19,12 +19,13 @@
 */
 
 var Pagination = (function($){ //function($) passes in the jQuery module to be used within the function
-    var current_page, total_pages;
+    var current_page, total_pages, display_card;
 
 
     var init = function(){
         current_page = 1;
         total_pages = 0;
+        display_card=true;
         //Updates total_pages whenever a new card is added to the current deck
         $.subscribe('card-added', function(){
             total_pages++;
@@ -32,8 +33,22 @@ var Pagination = (function($){ //function($) passes in the jQuery module to be u
     };
 
     function update_page(){
-        $('#question_header').text(Deck.title(current_page - 1));
-        $('#question').text(Deck.question(current_page - 1));
+        $('#card-text').text(Deck.title(current_page - 1));
+        $('#video').attr('src', `https://www.youtube.com/embed/${Deck.url(current_page - 1)}?rel=0&amp&autoplay=1`);
+        $('#video').css('display', 'none');
+        $('#card-text-wrapper').show();
+    }
+
+    function change_view(){
+        if(display_card){
+            $('#card-text-wrapper').hide();
+            $('#video').css('display', 'block');
+            display_card=false;
+        } else {
+            $('#video').css('display', 'none');
+            $('#card-text-wrapper').show();
+            display_card=true;
+        }
     }
 
     function go_to(page){
@@ -59,6 +74,8 @@ var Pagination = (function($){ //function($) passes in the jQuery module to be u
         },
         go_to: go_to,
         init: init,
-        current_page: get_current_page
+        current_page: get_current_page,
+        cycle: change_view,
+        update_page: update_page
     };
 })(jQuery);
