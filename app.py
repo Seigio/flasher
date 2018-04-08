@@ -5,7 +5,7 @@ app = Flask(__name__)
 app.config.from_envvar('FLASHERSETTINGS')
 
 def get_json_data(filename):
-    JSON_FOLDER = os.path.join(app.config['ROOT_FOLDER'], "static\\json\\")
+    JSON_FOLDER = os.path.join(app.config['ROOT_FOLDER'], "static/json/")
     json_file = os.path.join(JSON_FOLDER, filename)
 
     json_data = json.load(open(json_file))

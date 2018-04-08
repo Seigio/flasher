@@ -10,6 +10,12 @@ body{
     background-color: #2f004f;
 }
 
+@media screen and (min-width: 1920px){
+    body{
+        background-size: cover;
+    }
+}
+
 .banner{
     width: 100%;
     background-color: #A84F7D;

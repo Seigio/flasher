@@ -34,7 +34,7 @@ var Pagination = (function($){ //function($) passes in the jQuery module to be u
 
     function update_page(){
         $('#card-text').text(Deck.title(current_page - 1));
-        $('#video').attr('src', `https://www.youtube.com/embed/${Deck.url(current_page - 1)}?rel=0&amp&autoplay=1`);
+        $('#video').attr('src', `https://www.youtube.com/embed/${Deck.url(current_page - 1)}?rel=0&amp`);
         $('#video').css('display', 'none');
         $('#card-text-wrapper').show();
     }
